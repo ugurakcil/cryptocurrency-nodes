@@ -1,0 +1,22 @@
+<html>
+<body>
+  <script src="http://127.0.0.1:3001/socket.io/socket.io.js"></script>
+  <script>
+    eventToListenTo = 'tx'
+    room = 'inv'
+
+    var socket = io("http://127.0.0.1:3001/");
+    socket.on('connect', function() {
+      // Join the room.
+      socket.emit('subscribe', room);
+    })
+    socket.on(eventToListenTo, function(data) {
+      if (data.txlock) {
+        console.log("New InstantSend transaction received: " + data.txid)
+      } else {
+        console.log("New transaction received: " + data.txid)
+      }
+    })
+  </script>
+</body>
+</html>

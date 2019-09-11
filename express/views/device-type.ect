@@ -1,0 +1,35 @@
+<!-- page.ect -->
+<% extend 'layout.ect' %>
+
+<h1><% @title %></h1>
+
+
+<%= @device_type %>
+<%= @device_name %>
+
+<hr>
+
+<% if @is_desktop : %>
+<p>You're using a desktop</p>
+<% end %>
+<% if @is_phone : %>
+<p>You're using a phone</p>
+<% end %>
+<% if @is_tablet : %>
+<p>You're using a tablet</p>
+<% end %>
+<% if @is_tv : %>
+<p>You're using a tv</p>
+<% end %>
+<% if @is_bot : %>
+<p>You're using a bot</p>
+<% end %>
+<% if @is_car : %>
+<p>You're using a car</p>
+<% end %>
+
+
+
+<% block 'footer' : %>
+    <span>Custom  test footer content</span>
+<% end %>

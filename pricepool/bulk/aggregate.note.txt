@@ -1,0 +1,154 @@
+
+
+  const operations = [
+    { $match: { timestamp: { $gte: t.ago1day } } },
+    { $unwind: "$BTCUSD" },
+    { $unwind: "$BTCEUR" },
+    { $unwind: "$BTCJPY" },
+    { $unwind: "$USDTRY" },
+    { $group: {
+      _id: null,
+      BTCUSD_firstPrice: { $first: "$BTCUSD.close" },
+      BTCUSD_lastPrice: { $last: "$BTCUSD.close" },
+      BTCUSD_high: { $max: "$BTCUSD.high" },
+      BTCUSD_low: { $min: "$BTCUSD.low" }, 
+
+      BTCEUR_firstPrice: { $first: "$BTCEUR.close" },
+      BTCEUR_lastPrice: { $last: "$BTCEUR.close" },
+      BTCEUR_high: { $max: "$BTCEUR.high" },
+      BTCEUR_low: { $min: "$BTCEUR.low" },
+
+      BTCJPY_firstPrice: { $first: "$BTCJPY.close" }, 
+      BTCJPY_lastPrice: { $last: "$BTCJPY.close" },
+      BTCJPY_high: { $max: "$BTCJPY.high" }, 
+      BTCJPY_low: { $min: "$BTCJPY.low" }, 
+
+      USDTRY_firstPrice: { $first: "$USDTRY.close" }, 
+      USDTRY_lastPrice: { $last: "$USDTRY.close" },
+      USDTRY_high: { $max: "$USDTRY.high" }, 
+      USDTRY_low: { $min: "$USDTRY.low" }
+      }
+    },
+    {
+      $project: {
+        timestamp: null,
+        'BTCUSD': {
+          change: { $subtract: [ '$BTCUSD_lastPrice', '$BTCUSD_firstPrice' ] },
+          percentage: { 
+          $subtract: [
+              1, { $divide: [ '$BTCUSD_firstPrice', '$BTCUSD_lastPrice' ] }
+          ]
+          },
+          open: '$BTCUSD_firstPrice',
+          close: '$BTCUSD_lastPrice',
+          high: '$BTCUSD_high',
+          low: '$BTCUSD_low'
+        },
+        'BTCEUR': {
+          change: { $subtract: [ '$BTCEUR_lastPrice', '$BTCEUR_firstPrice' ] },
+          percentage: { 
+          $subtract: [
+              1, { $divide: [ '$BTCEUR_firstPrice', '$BTCEUR_lastPrice' ] }
+          ]
+          },
+          open: '$BTCEUR_firstPrice',
+          close: '$BTCEUR_lastPrice',
+          high: '$BTCEUR_high',
+          low: '$BTCEUR_low'
+        }
+      }
+    },
+    { $sort: { timestamp: -1 } }
+  ]
+  
+
+
+
+
+
+
+  db.collection.getPlanCache().clear()
+
+for (var i = 75447; i <= 100000; i++) {
+   db.fakeminoneforge.insert( {
+    "timestamp" : i,
+    "BTCUSD" : [ 
+        {
+            "open" : NumberDecimal("10144.28"),
+            "low" : NumberDecimal("10144.28"),
+            "high" : NumberDecimal("10148.44"),
+            "close" : NumberDecimal("10148.44")
+        }
+    ],
+    "BTCEUR" : [ 
+        {
+            "open" : NumberDecimal("9139.0322"),
+            "low" : NumberDecimal("9138.8264"),
+            "high" : NumberDecimal("9142.3269"),
+            "close" : NumberDecimal("9142.3269")
+        }
+    ],
+    "BTCJPY" : [ 
+        {
+            "open" : NumberDecimal("1074948.7745"),
+            "low" : NumberDecimal("1074908.1974"),
+            "high" : NumberDecimal("1075266.6593"),
+            "close" : NumberDecimal("1075237.3664")
+        }
+    ],
+    "USDTRY" : [ 
+        {
+            "open" : NumberDecimal("5.81776"),
+            "low" : NumberDecimal("5.81747"),
+            "high" : NumberDecimal("5.81865"),
+            "close" : NumberDecimal("5.81747")
+        }
+    ],
+    "__v" : 0
+} )
+}
+
+
+
+
+
+
+
+
+
+db.getCollection('fakeminoneforge').explain('executionStats').aggregate([
+    { $match: { timestamp: { $gte: 0 } } },
+    { $unwind: "$BTCUSD" },
+    { $group: {
+      _id: null,
+      BTCUSD_firstPrice: { $first: "$BTCUSD.close" },
+      BTCUSD_lastPrice: { $last: "$BTCUSD.close" },
+      BTCUSD_high: { $max: "$BTCUSD.high" },
+      BTCUSD_low: { $min: "$BTCUSD.low" }
+      }
+    },
+    {
+      $project: {
+        timestamp: null,
+        'BTCUSD': {
+          change: { $subtract: [ '$BTCUSD_lastPrice', '$BTCUSD_firstPrice' ] },
+          percentage: { 
+          $subtract: [
+              1, { $divide: [ '$BTCUSD_firstPrice', '$BTCUSD_lastPrice' ] }
+          ]
+          },
+          open: '$BTCUSD_firstPrice',
+          close: '$BTCUSD_lastPrice',
+          high: '$BTCUSD_high',
+          low: '$BTCUSD_low'
+        }
+      }
+    },
+    { $sort: { timestamp: -1 } }
+])
+  
+
+
+
+
+  db.getCollection('fakeminoneforge').createIndex({timestamp:-1})

@@ -1,0 +1,25 @@
+{
+  "name": "icrypex-nodes",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ugurakcil/icrypex-nodes.git"
+  },
+  "keywords": [
+    "icrypex-nodes"
+  ],
+  "author": "Uğur",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ugurakcil/icrypex-nodes/issues"
+  },
+  "homepage": "https://github.com/ugurakcil/icrypex-nodes#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
