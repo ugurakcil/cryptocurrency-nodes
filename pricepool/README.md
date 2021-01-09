@@ -1,4 +1,4 @@
-# ICRYPEX PRICEPOOL 2
+# PRICEPOOL 2
 
 OneForge, CoinCap vb. sağlayıcı API'larından alınan verilerin kaydedilmesi ve günlük, haftalık, aylık analizlerinin sorgulanması için hazırlanmıştır.
 
