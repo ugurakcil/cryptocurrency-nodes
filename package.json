@@ -1,5 +1,5 @@
 {
-  "name": "icrypex-nodes",
+  "name": "cryptocurrency-nodes",
   "version": "1.0.0",
   "description": "",
   "main": "main.js",
@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ugurakcil/icrypex-nodes.git"
+    "url": "git+https://github.com/ugurakcil/cryptocurrency-nodes.git"
   },
   "keywords": [
     "icrypex-nodes"
@@ -16,9 +16,9 @@
   "author": "Uğur",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/ugurakcil/icrypex-nodes/issues"
+    "url": "https://github.com/ugurakcil/cryptocurrency-nodes/issues"
   },
-  "homepage": "https://github.com/ugurakcil/icrypex-nodes#readme",
+  "homepage": "https://github.com/ugurakcil/cryptocurrency-nodes#readme",
   "dependencies": {
     "express": "^4.17.1"
   }
